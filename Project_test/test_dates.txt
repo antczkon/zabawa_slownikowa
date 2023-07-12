@@ -1,5 +1,0 @@
-Jan	1	Sun
-Jan	2	Mon
-Feb	6	Mon
-Feb	7	Tue
-Apr	29	Sat
