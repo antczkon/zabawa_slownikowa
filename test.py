@@ -1,6 +1,6 @@
 import unittest
 import main
-
+from unittest.mock import patch, mock_open
 
 class TestDictDates(unittest.TestCase):
     MONTHS = ['Jan','Jan','Feb','Feb','Apr']
@@ -9,8 +9,17 @@ class TestDictDates(unittest.TestCase):
     DICTIONAR_MONTHS_DAYS_WEEKDAYS = {'Jan':{'1':'Sun','2':'Mon'},'Feb':{'6':'Mon','7':'Tue'},'Apr':{'29':'Sat'}}
 
     def test_given_data_returns_three_lists_of_strings_in_correct_order(self):
+        
+        m=mock_open
+        read_data = "Jan  1   Sun"
+        with patch('__main__.open', mock_open(read_data=read_data)) as m:
+            with open('test_dates.txt') as h:
+                result = h.read()
+        main.open_file_with_data = m
+
+        
         result = main.unpack('test_dates.txt')
-        expected = (self.MONTHS,self.NUM_DAYS,self.WEEKDAYS)
+        expected = (['Jan'],['1'],['Sun'])
         self.assertEqual(expected,result)
     
     def test_given_months_return_dict(self):
